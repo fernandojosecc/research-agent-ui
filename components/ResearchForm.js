@@ -196,15 +196,23 @@ export default function ResearchForm({ onResearch, isLoading }) {
                     color: 'var(--text-muted)',
                     fontSize: '0.875rem',
                     cursor: 'pointer',
-                    transition: 'all 0.2s'
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    transform: 'translateY(0)',
+                    boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
                   }}
                   onMouseOver={(e) => {
                     e.target.style.borderColor = 'var(--blue-primary)';
                     e.target.style.color = 'var(--blue-primary)';
+                    e.target.style.transform = 'translateY(-2px)';
+                    e.target.style.boxShadow = '0 4px 12px rgba(24, 95, 165, 0.15)';
+                    e.target.style.background = 'var(--blue-light)';
                   }}
                   onMouseOut={(e) => {
                     e.target.style.borderColor = 'var(--border-light)';
                     e.target.style.color = 'var(--text-muted)';
+                    e.target.style.transform = 'translateY(0)';
+                    e.target.style.boxShadow = '0 1px 3px rgba(0,0,0,0.1)';
+                    e.target.style.background = 'white';
                   }}
                 >
                   {example}
