@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import ResearchForm from '../components/ResearchForm';
 import ReportDisplay from '../components/ReportDisplay';
@@ -9,6 +9,11 @@ import Footer from '../components/Footer';
 export default function Home() {
   const [report, setReport] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [pageLoaded, setPageLoaded] = useState(false);
+
+  useEffect(() => {
+    setPageLoaded(true);
+  }, []);
 
   const handleResearch = async (topic, depth) => {
     setIsLoading(true);
@@ -53,7 +58,10 @@ export default function Home() {
       minHeight: '100vh',
       display: 'flex',
       flexDirection: 'column',
-      background: 'var(--bg-page)'
+      background: 'var(--bg-page)',
+      opacity: pageLoaded ? 1 : 0,
+      transform: pageLoaded ? 'translateY(0)' : 'translateY(20px)',
+      transition: 'all 0.6s ease-out'
     }}>
       <Header />
       
