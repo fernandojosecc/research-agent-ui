@@ -113,31 +113,27 @@ export default function ReportDisplay({ report, onNewResearch }) {
             {report.key_findings.map((finding, index) => (
               <div key={index} style={{
                 display: 'flex',
-                gap: '1rem',
-                alignItems: 'flex-start'
+                alignItems: 'flex-start',
+                padding: '1rem',
+                borderLeft: '4px solid var(--blue-primary)',
+                background: 'var(--blue-light)',
+                borderRadius: '0 8px 8px 0',
+                transition: 'all 0.2s'
+              }}
+              onMouseOver={(e) => {
+                e.target.style.background = 'var(--bg-page)';
+                e.target.style.transform = 'translateX(4px)';
+              }}
+              onMouseOut={(e) => {
+                e.target.style.background = 'var(--blue-light)';
+                e.target.style.transform = 'translateX(0)';
               }}>
-                <div style={{
-                  background: 'var(--yellow-primary)',
-                  color: 'white',
-                  width: '28px',
-                  height: '28px',
-                  borderRadius: '50%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '0.875rem',
-                  fontWeight: '600',
-                  flexShrink: 0,
-                  marginTop: '2px'
-                }}>
-                  {index + 1}
-                </div>
                 <p style={{
                   fontSize: '1rem',
                   lineHeight: '1.6',
                   color: 'var(--text-primary)',
                   margin: 0,
-                  flex: 1
+                  fontWeight: '500'
                 }}>
                   {finding}
                 </p>
