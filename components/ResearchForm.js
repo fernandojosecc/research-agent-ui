@@ -66,6 +66,7 @@ export default function ResearchForm({ onResearch, isLoading }) {
             onChange={handleTopicChange}
             placeholder="Enter any topic to research..."
             disabled={isLoading}
+            className="animated-border-input"
             style={{
               width: '100%',
               minHeight: '120px',
@@ -79,15 +80,8 @@ export default function ResearchForm({ onResearch, isLoading }) {
               backgroundColor: isLoading ? 'var(--bg-page)' : 'white',
               color: 'var(--text-primary)',
               outline: 'none',
-              transition: 'border-color 0.2s'
-            }}
-            onFocus={(e) => {
-              if (!isLoading) {
-                e.target.style.borderColor = 'var(--blue-primary)';
-              }
-            }}
-            onBlur={(e) => {
-              e.target.style.borderColor = 'var(--border-light)';
+              transition: 'all 0.3s',
+              position: 'relative'
             }}
           />
           <div style={{
@@ -262,6 +256,22 @@ export default function ResearchForm({ onResearch, isLoading }) {
         @keyframes spin {
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes gradient-border {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        
+        .animated-border-input:focus {
+          border: 2px solid transparent;
+          background-image: linear-gradient(white, white), 
+                            linear-gradient(45deg, var(--blue-primary), var(--yellow-primary), var(--blue-primary));
+          background-origin: border-box;
+          background-clip: padding-box, border-box;
+          background-size: 200% 200%;
+          animation: gradient-border 3s ease infinite;
         }
       `}</style>
     </div>
