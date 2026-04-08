@@ -116,7 +116,11 @@ export default function ResearchForm({ onResearch, isLoading }) {
           </label>
           <div style={{
             display: 'flex',
-            gap: '1rem'
+            background: 'var(--bg-page)',
+            border: `1px solid var(--border-light)`,
+            borderRadius: '24px',
+            padding: '4px',
+            position: 'relative'
           }}>
             <button
               type="button"
@@ -125,14 +129,16 @@ export default function ResearchForm({ onResearch, isLoading }) {
               style={{
                 flex: 1,
                 padding: '0.75rem 1rem',
-                border: `2px solid ${depth === 'quick' ? 'var(--blue-primary)' : 'var(--border-light)'}`,
-                borderRadius: '8px',
-                background: depth === 'quick' ? 'var(--blue-light)' : 'white',
-                color: depth === 'quick' ? 'var(--blue-primary)' : 'var(--text-primary)',
+                border: 'none',
+                borderRadius: '20px',
+                background: depth === 'quick' ? 'var(--blue-primary)' : 'transparent',
+                color: depth === 'quick' ? 'white' : 'var(--text-primary)',
                 fontSize: '0.875rem',
                 fontWeight: '600',
                 cursor: isLoading ? 'not-allowed' : 'pointer',
-                transition: 'all 0.2s'
+                transition: 'all 0.2s',
+                zIndex: depth === 'quick' ? 2 : 1,
+                position: 'relative'
               }}
             >
               Quick (30s)
@@ -144,14 +150,16 @@ export default function ResearchForm({ onResearch, isLoading }) {
               style={{
                 flex: 1,
                 padding: '0.75rem 1rem',
-                border: `2px solid ${depth === 'deep' ? 'var(--blue-primary)' : 'var(--border-light)'}`,
-                borderRadius: '8px',
-                background: depth === 'deep' ? 'var(--blue-light)' : 'white',
-                color: depth === 'deep' ? 'var(--blue-primary)' : 'var(--text-primary)',
+                border: 'none',
+                borderRadius: '20px',
+                background: depth === 'deep' ? 'var(--blue-primary)' : 'transparent',
+                color: depth === 'deep' ? 'white' : 'var(--text-primary)',
                 fontSize: '0.875rem',
                 fontWeight: '600',
                 cursor: isLoading ? 'not-allowed' : 'pointer',
-                transition: 'all 0.2s'
+                transition: 'all 0.2s',
+                zIndex: depth === 'deep' ? 2 : 1,
+                position: 'relative'
               }}
             >
               Deep (2min)
