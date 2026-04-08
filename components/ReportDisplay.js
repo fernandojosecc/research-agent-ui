@@ -25,6 +25,14 @@ export default function ReportDisplay({ report, onNewResearch }) {
     });
   };
 
+  const calculateReadingTime = () => {
+    const allText = `${report.title} ${report.executive_summary} ${report.key_findings.join(' ')} ${report.sections.map(section => `${section.heading} ${section.content}`).join(' ')}`;
+    const wordsPerMinute = 200;
+    const wordCount = allText.split(/\s+/).length;
+    const readingTime = Math.ceil(wordCount / wordsPerMinute);
+    return readingTime;
+  };
+
   return (
     <div style={{
       animation: 'fadeIn 0.5s ease-in',
@@ -39,15 +47,31 @@ export default function ReportDisplay({ report, onNewResearch }) {
         boxShadow: '0 2px 8px rgba(0,0,0,0.05)'
       }}>
         {/* Report Title */}
-        <h2 style={{
-          fontSize: '2rem',
-          fontWeight: '700',
-          color: 'var(--text-primary)',
-          marginBottom: '1.5rem',
-          lineHeight: '1.2'
-        }}>
-          {report.title}
-        </h2>
+        <div>
+          <h2 style={{
+            fontSize: '2rem',
+            fontWeight: '700',
+            color: 'var(--text-primary)',
+            marginBottom: '0.5rem',
+            lineHeight: '1.2'
+          }}>
+            {report.title}
+          </h2>
+          <div style={{
+            fontSize: '0.875rem',
+            color: 'var(--text-muted)',
+            marginBottom: '1.5rem',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem'
+          }}>
+            <span>~{calculateReadingTime()} min read</span>
+            <span>·</span>
+            <span>{report.key_findings.length} key findings</span>
+            <span>·</span>
+            <span>{report.sources.length} sources</span>
+          </div>
+        </div>
 
         {/* Executive Summary */}
         <div style={{
