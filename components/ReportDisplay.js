@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 export default function ReportDisplay({ report, onNewResearch }) {
   const [copied, setCopied] = useState(false);
+  const [shared, setShared] = useState(false);
 
   const handleCopyReport = async () => {
     const reportText = `${report.title}\n\n${report.executive_summary}\n\nKey Findings:\n${report.key_findings.map((finding, index) => `${index + 1}. ${finding}`).join('\n')}\n\n${report.sections.map(section => `${section.heading}\n${section.content}`).join('\n\n')}\n\nSources:\n${report.sources.map(source => `- ${source.title}: ${source.url}`).join('\n')}`;
@@ -12,6 +13,17 @@ export default function ReportDisplay({ report, onNewResearch }) {
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
       console.error('Failed to copy report:', err);
+    }
+  };
+
+  const handleShare = async () => {
+    try {
+      const pageUrl = window.location.href;
+      await navigator.clipboard.writeText(pageUrl);
+      setShared(true);
+      setTimeout(() => setShared(false), 2000);
+    } catch (err) {
+      console.error('Failed to share:', err);
     }
   };
 
@@ -306,6 +318,28 @@ export default function ReportDisplay({ report, onNewResearch }) {
             }}
           >
             {copied ? 'Copied!' : 'Copy report'}
+          </button>
+          <button
+            onClick={handleShare}
+            style={{
+              padding: '0.75rem 1.5rem',
+              border: `1px solid var(--blue-primary)`,
+              borderRadius: '8px',
+              background: 'white',
+              color: 'var(--blue-primary)',
+              fontSize: '0.875rem',
+              fontWeight: '600',
+              cursor: 'pointer',
+              transition: 'all 0.2s'
+            }}
+            onMouseOver={(e) => {
+              e.target.style.background = 'var(--blue-light)';
+            }}
+            onMouseOut={(e) => {
+              e.target.style.background = 'white';
+            }}
+          >
+            {shared ? 'Link copied!' : 'Share'}
           </button>
           <button
             onClick={onNewResearch}
