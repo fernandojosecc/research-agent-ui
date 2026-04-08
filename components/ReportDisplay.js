@@ -150,7 +150,10 @@ export default function ReportDisplay({ report, onNewResearch }) {
                 fontSize: '1.125rem',
                 fontWeight: '600',
                 color: 'var(--text-primary)',
-                marginBottom: '0.75rem'
+                marginBottom: '0.75rem',
+                paddingBottom: '0.5rem',
+                borderBottom: '3px solid var(--blue-primary)',
+                display: 'inline-block'
               }}>
                 {section.heading}
               </h4>
