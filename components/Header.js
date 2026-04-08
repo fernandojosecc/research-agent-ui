@@ -41,7 +41,17 @@ export default function Header() {
             color: 'var(--blue-primary)',
             textDecoration: 'none',
             fontWeight: '500',
-            fontSize: '1rem'
+            fontSize: '1rem',
+            transition: 'all 0.2s',
+            borderBottom: '1px solid transparent'
+          }}
+          onMouseOver={(e) => {
+            e.target.style.color = '#1564A0';
+            e.target.style.borderBottomColor = 'var(--blue-primary)';
+          }}
+          onMouseOut={(e) => {
+            e.target.style.color = 'var(--blue-primary)';
+            e.target.style.borderBottomColor = 'transparent';
           }}
         >
           fernandocontreras.dev
