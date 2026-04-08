@@ -4,6 +4,8 @@ export default function ResearchForm({ onResearch, isLoading }) {
   const [topic, setTopic] = useState('');
   const [depth, setDepth] = useState('quick');
   const [currentStep, setCurrentStep] = useState(0);
+  const [completedSteps, setCompletedSteps] = useState([]);
+  const [startTime, setStartTime] = useState(null);
 
   const exampleTopics = [
     "AI trends 2025",
@@ -21,12 +23,32 @@ export default function ResearchForm({ onResearch, isLoading }) {
 
   useEffect(() => {
     if (isLoading) {
+      if (!startTime) {
+        setStartTime(Date.now());
+        setCompletedSteps([]);
+        setCurrentStep(0);
+      }
+      
       const interval = setInterval(() => {
-        setCurrentStep((prev) => (prev + 1) % loadingSteps.length);
+        setCurrentStep((prev) => {
+          const nextStep = (prev + 1) % loadingSteps.length;
+          if (nextStep === 0) {
+            setCompletedSteps([0, 1, 2, 3]);
+          } else if (nextStep === 1) {
+            setCompletedSteps([0]);
+          } else if (nextStep === 2) {
+            setCompletedSteps([0, 1]);
+          } else if (nextStep === 3) {
+            setCompletedSteps([0, 1, 2]);
+          }
+          return nextStep;
+        });
       }, 4000);
       return () => clearInterval(interval);
     } else {
       setCurrentStep(0);
+      setCompletedSteps([]);
+      setStartTime(null);
     }
   }, [isLoading]);
 
@@ -243,17 +265,97 @@ export default function ResearchForm({ onResearch, isLoading }) {
           }}
         >
           {isLoading ? (
-            <>
+            <div style={{ width: '100%' }}>
               <div style={{
-                width: '16px',
-                height: '16px',
-                border: '2px solid rgba(255,255,255,0.3)',
-                borderTop: '2px solid white',
-                borderRadius: '50%',
-                animation: 'spin 1s linear infinite'
-              }} />
-              {loadingSteps[currentStep]}
-            </>
+                marginBottom: '1rem',
+                textAlign: 'center',
+                fontSize: '0.875rem',
+                color: 'var(--text-muted)',
+                fontWeight: '500'
+              }}>
+                Researching: {topic}
+              </div>
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '0.75rem',
+                marginBottom: '1rem'
+              }}>
+                {loadingSteps.map((step, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.75rem',
+                      opacity: completedSteps.includes(index) ? 1 : 
+                                index === currentStep ? 1 : 0.4,
+                      transition: 'opacity 0.3s'
+                    }}
+                  >
+                    <div style={{
+                      width: '20px',
+                      height: '20px',
+                      borderRadius: '50%',
+                      border: completedSteps.includes(index) 
+                        ? 'none' 
+                        : index === currentStep 
+                          ? '2px solid var(--blue-primary)'
+                          : '2px solid var(--border-light)',
+                      background: completedSteps.includes(index) 
+                        ? 'var(--blue-primary)'
+                        : index === currentStep
+                          ? 'white'
+                          : 'var(--bg-page)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '10px',
+                      color: completedSteps.includes(index) ? 'white' : 'transparent',
+                      position: 'relative'
+                    }}>
+                      {completedSteps.includes(index) && (
+                        <svg
+                          width="12"
+                          height="12"
+                          viewBox="0 0 12 12"
+                          fill="currentColor"
+                        >
+                          <path d="M10 3L4.5 8.5L2 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+                        </svg>
+                      )}
+                      {index === currentStep && !completedSteps.includes(index) && (
+                        <div style={{
+                          width: '8px',
+                          height: '8px',
+                          borderRadius: '50%',
+                          background: 'var(--blue-primary)',
+                          animation: 'pulse 2s infinite'
+                        }} />
+                      )}
+                    </div>
+                    <span style={{
+                      fontSize: '0.875rem',
+                      color: completedSteps.includes(index) 
+                        ? 'var(--text-primary)'
+                        : index === currentStep
+                          ? 'var(--blue-primary)'
+                          : 'var(--text-muted)',
+                      fontWeight: completedSteps.includes(index) || index === currentStep ? '600' : '400'
+                    }}>
+                      {step}
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <div style={{
+                textAlign: 'center',
+                fontSize: '0.75rem',
+                color: 'var(--text-muted)'
+              }}>
+                {depth === 'quick' ? '~30 seconds remaining' : '~2 minutes remaining'}
+              </div>
+            </div>
           ) : (
             'Research  \u2192'
           )}
@@ -270,6 +372,12 @@ export default function ResearchForm({ onResearch, isLoading }) {
           0% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
           100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes pulse {
+          0% { opacity: 1; }
+          50% { opacity: 0.5; }
+          100% { opacity: 1; }
         }
         
         .animated-border-input:focus {
