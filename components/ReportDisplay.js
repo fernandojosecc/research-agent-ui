@@ -33,6 +33,15 @@ export default function ReportDisplay({ report, onNewResearch }) {
     return readingTime;
   };
 
+  const getDomainFromUrl = (url) => {
+    try {
+      const domain = new URL(url).hostname;
+      return domain.replace('www.', '');
+    } catch {
+      return 'Unknown Source';
+    }
+  };
+
   return (
     <div style={{
       animation: 'fadeIn 0.5s ease-in',
@@ -179,7 +188,7 @@ export default function ReportDisplay({ report, onNewResearch }) {
           }}>
             Sources
           </h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem' }}>
             {report.sources.map((source, index) => (
               <a
                 key={index}
@@ -187,21 +196,74 @@ export default function ReportDisplay({ report, onNewResearch }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
-                  color: 'var(--blue-primary)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  padding: '1rem',
+                  border: `1px solid var(--border-light)`,
+                  borderRadius: '8px',
+                  background: 'white',
                   textDecoration: 'none',
-                  fontSize: '0.875rem',
-                  lineHeight: '1.4',
-                  borderBottom: '1px solid transparent',
-                  transition: 'border-color 0.2s'
+                  transition: 'all 0.2s',
+                  cursor: 'pointer'
                 }}
                 onMouseOver={(e) => {
-                  e.target.style.borderBottomColor = 'var(--blue-primary)';
+                  e.target.style.borderColor = 'var(--blue-primary)';
+                  e.target.style.boxShadow = '0 4px 12px rgba(24, 95, 165, 0.15)';
+                  e.target.style.transform = 'translateY(-2px)';
                 }}
                 onMouseOut={(e) => {
-                  e.target.style.borderBottomColor = 'transparent';
+                  e.target.style.borderColor = 'var(--border-light)';
+                  e.target.style.boxShadow = 'none';
+                  e.target.style.transform = 'translateY(0)';
                 }}
               >
-                {source.title}
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  marginBottom: '0.5rem',
+                  fontSize: '0.75rem',
+                  color: 'var(--text-muted)',
+                  fontWeight: '600'
+                }}>
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 12 12"
+                    fill="currentColor"
+                  >
+                    <path d="M6 0C2.686 0 0 2.686 0 6s2.686 6 6 6 6-2.686 6-6S9.314 0 6 0zm0 10.5c-2.485 0-4.5-2.015-4.5-4.5S3.515 1.5 6 1.5s4.5 2.015 4.5 4.5-2.015 4.5-4.5 4.5zm.75-6.75H5.25v4.5h1.5v-3h1.5v-1.5z"/>
+                    <path d="M8.25 3.75L9.75 2.25 12 4.5 10.5 6z" fill="currentColor"/>
+                  </svg>
+                  {getDomainFromUrl(source.url)}
+                </div>
+                <div style={{
+                  fontSize: '0.875rem',
+                  color: 'var(--text-primary)',
+                  lineHeight: '1.4',
+                  fontWeight: '500'
+                }}>
+                  {source.title}
+                </div>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.25rem',
+                  marginTop: '0.5rem',
+                  fontSize: '0.75rem',
+                  color: 'var(--blue-primary)',
+                  fontWeight: '500'
+                }}>
+                  Visit source
+                  <svg
+                    width="10"
+                    height="10"
+                    viewBox="0 0 10 10"
+                    fill="currentColor"
+                  >
+                    <path d="M8 0H6V2H7.586L3 6.586V5H1v4h4V7H3.414L8 2.414V4h2V0z"/>
+                  </svg>
+                </div>
               </a>
             ))}
           </div>
