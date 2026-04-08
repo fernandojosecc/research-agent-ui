@@ -37,6 +37,13 @@ export default function ResearchForm({ onResearch, isLoading }) {
     }
   };
 
+  const handleTopicChange = (e) => {
+    const value = e.target.value;
+    if (value.length <= 200) {
+      setTopic(value);
+    }
+  };
+
   const handleExampleClick = (exampleTopic) => {
     setTopic(exampleTopic);
   };
@@ -53,15 +60,17 @@ export default function ResearchForm({ onResearch, isLoading }) {
     }}>
       <form onSubmit={handleSubmit}>
         <div style={{ marginBottom: '1.5rem' }}>
+          <div style={{ position: 'relative' }}>
           <textarea
             value={topic}
-            onChange={(e) => setTopic(e.target.value)}
+            onChange={handleTopicChange}
             placeholder="Enter any topic to research..."
             disabled={isLoading}
             style={{
               width: '100%',
               minHeight: '120px',
               padding: '1rem',
+              paddingBottom: '2.5rem',
               border: `1px solid var(--border-light)`,
               borderRadius: '8px',
               fontSize: '1rem',
@@ -81,6 +90,18 @@ export default function ResearchForm({ onResearch, isLoading }) {
               e.target.style.borderColor = 'var(--border-light)';
             }}
           />
+          <div style={{
+            position: 'absolute',
+            bottom: '0.75rem',
+            right: '1rem',
+            fontSize: '0.75rem',
+            color: topic.length >= 180 ? 'var(--yellow-primary)' : 'var(--text-muted)',
+            fontWeight: topic.length >= 180 ? '600' : '400',
+            pointerEvents: 'none'
+          }}>
+            {topic.length}/200
+          </div>
+        </div>
         </div>
 
         <div style={{ marginBottom: '1.5rem' }}>
