@@ -273,7 +273,7 @@ export default function ResearchForm({ onResearch, isLoading }) {
                 gap: '0.75rem',
                 marginBottom: '1rem'
               }}>
-                {loadingSteps.map((step, index) => (
+                {progressMessages.map((step, index) => (
                   <div
                     key={index}
                     style={{
