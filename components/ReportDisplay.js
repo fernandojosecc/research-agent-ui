@@ -54,6 +54,29 @@ export default function ReportDisplay({ report, onNewResearch }) {
     }
   };
 
+  const processSources = (sources) => {
+    if (!Array.isArray(sources)) return [];
+    
+    // Normalize source objects to handle different field names from backend
+    const normalizedSources = sources.map(source => ({
+      title: source.title || source.name || source.source || 'Untitled Source',
+      url: source.url || source.link || source.href
+    })).filter(source => source.url); // Filter out sources with no URL
+    
+    // Remove duplicates by URL and limit to 8
+    const uniqueSources = [];
+    const seenUrls = new Set();
+    
+    for (const source of normalizedSources) {
+      if (!seenUrls.has(source.url) && uniqueSources.length < 8) {
+        seenUrls.add(source.url);
+        uniqueSources.push(source);
+      }
+    }
+    
+    return uniqueSources;
+  };
+
   return (
     <div style={{
       animation: 'fadeIn 0.5s ease-in',
@@ -201,7 +224,7 @@ export default function ReportDisplay({ report, onNewResearch }) {
             Sources
           </h3>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem' }}>
-            {report.sources.map((source, index) => (
+            {processSources(report.sources).map((source, index) => (
               <a
                 key={index}
                 href={source.url}
