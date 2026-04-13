@@ -20,8 +20,8 @@ export default function Home() {
     setReport(null);
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-      const response = await fetch(`${apiUrl}/research`, {
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '') || 'http://localhost:8000';
+      const response = await fetch(`${baseUrl}/research`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
