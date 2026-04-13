@@ -3,9 +3,8 @@ import React, { useState, useEffect } from 'react';
 export default function ResearchForm({ onResearch, isLoading }) {
   const [topic, setTopic] = useState('');
   const [depth, setDepth] = useState('quick');
-  const [currentStep, setCurrentStep] = useState(0);
-  const [completedSteps, setCompletedSteps] = useState([]);
-  const [startTime, setStartTime] = useState(null);
+  const [timeLeft, setTimeLeft] = useState(30);
+  const [progressStep, setProgressStep] = useState(0);
 
   const exampleTopics = [
     "AI trends 2025",
@@ -14,43 +13,36 @@ export default function ResearchForm({ onResearch, isLoading }) {
     "Cryptocurrency regulation"
   ];
 
-  const loadingSteps = [
-    "Searching the web...",
+  const progressMessages = [
+    "Searching web...",
     "Reading sources...",
     "Analyzing data...",
     "Writing report..."
   ];
 
   useEffect(() => {
-    if (isLoading) {
-      if (!startTime) {
-        setStartTime(Date.now());
-        setCompletedSteps([]);
-        setCurrentStep(0);
-      }
-      
-      const interval = setInterval(() => {
-        setCurrentStep((prev) => {
-          const nextStep = (prev + 1) % loadingSteps.length;
-          if (nextStep === 0) {
-            setCompletedSteps([0, 1, 2, 3]);
-          } else if (nextStep === 1) {
-            setCompletedSteps([0]);
-          } else if (nextStep === 2) {
-            setCompletedSteps([0, 1]);
-          } else if (nextStep === 3) {
-            setCompletedSteps([0, 1, 2]);
-          }
-          return nextStep;
-        });
-      }, 4000);
-      return () => clearInterval(interval);
-    } else {
-      setCurrentStep(0);
-      setCompletedSteps([]);
-      setStartTime(null);
+    if (!isLoading) {
+      setTimeLeft(depth === 'deep' ? 120 : 30);
+      setProgressStep(0);
+      return;
     }
-  }, [isLoading]);
+    const countdown = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev <= 1) {
+          clearInterval(countdown);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    const stepper = setInterval(() => {
+      setProgressStep(prev => (prev + 1) % 4);
+    }, 4000);
+    return () => {
+      clearInterval(countdown);
+      clearInterval(stepper);
+    };
+  }, [isLoading, depth]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -353,7 +345,8 @@ export default function ResearchForm({ onResearch, isLoading }) {
                 fontSize: '0.75rem',
                 color: 'var(--text-muted)'
               }}>
-                {depth === 'quick' ? '~30 seconds remaining' : '~2 minutes remaining'}
+                <p>{progressMessages[progressStep]}</p>
+                <p>{timeLeft > 0 ? `${timeLeft} seconds remaining` : "Almost done..."}</p>
               </div>
             </div>
           ) : (
