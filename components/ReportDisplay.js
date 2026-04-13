@@ -214,95 +214,104 @@ export default function ReportDisplay({ report, onNewResearch }) {
         </div>
 
         {/* Sources */}
-        <div style={{ marginBottom: '2rem' }}>
-          <h3 style={{
-            fontSize: '1.125rem',
-            fontWeight: '600',
-            color: 'var(--text-primary)',
-            marginBottom: '1rem'
-          }}>
-            Sources
-          </h3>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem' }}>
-            {processSources(report.sources).map((source, index) => (
-              <a
-                key={index}
-                href={source.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  padding: '1rem',
-                  border: `1px solid var(--border-light)`,
-                  borderRadius: '8px',
-                  background: 'white',
-                  textDecoration: 'none',
-                  transition: 'all 0.2s',
-                  cursor: 'pointer'
-                }}
-                onMouseOver={(e) => {
-                  e.target.style.borderColor = 'var(--blue-primary)';
-                  e.target.style.boxShadow = '0 4px 12px rgba(24, 95, 165, 0.15)';
-                  e.target.style.transform = 'translateY(-2px)';
-                }}
-                onMouseOut={(e) => {
-                  e.target.style.borderColor = 'var(--border-light)';
-                  e.target.style.boxShadow = 'none';
-                  e.target.style.transform = 'translateY(0)';
-                }}
-              >
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                  marginBottom: '0.5rem',
-                  fontSize: '0.75rem',
-                  color: 'var(--text-muted)',
-                  fontWeight: '600'
-                }}>
-                  <svg
-                    width="12"
-                    height="12"
-                    viewBox="0 0 12 12"
-                    fill="currentColor"
-                  >
-                    <path d="M6 0C2.686 0 0 2.686 0 6s2.686 6 6 6 6-2.686 6-6S9.314 0 6 0zm0 10.5c-2.485 0-4.5-2.015-4.5-4.5S3.515 1.5 6 1.5s4.5 2.015 4.5 4.5-2.015 4.5-4.5 4.5zm.75-6.75H5.25v4.5h1.5v-3h1.5v-1.5z"/>
-                    <path d="M8.25 3.75L9.75 2.25 12 4.5 10.5 6z" fill="currentColor"/>
-                  </svg>
-                  {getDomainFromUrl(source.url)}
-                </div>
-                <div style={{
-                  fontSize: '0.875rem',
-                  color: 'var(--text-primary)',
-                  lineHeight: '1.4',
-                  fontWeight: '500'
-                }}>
-                  {source.title}
-                </div>
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.25rem',
-                  marginTop: '0.5rem',
-                  fontSize: '0.75rem',
-                  color: 'var(--blue-primary)',
-                  fontWeight: '500'
-                }}>
-                  Visit source
-                  <svg
-                    width="10"
-                    height="10"
-                    viewBox="0 0 10 10"
-                    fill="currentColor"
-                  >
-                    <path d="M8 0H6V2H7.586L3 6.586V5H1v4h4V7H3.414L8 2.414V4h2V0z"/>
-                  </svg>
-                </div>
-              </a>
-            ))}
+        {report.sources && report.sources.length > 0 && (
+          <div style={{ marginBottom: '2rem' }}>
+            <h3 style={{
+              fontSize: '1.125rem',
+              fontWeight: '600',
+              color: 'var(--text-primary)',
+              marginBottom: '1rem'
+            }}>
+              Sources
+            </h3>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem' }}>
+              {report.sources
+                .filter(s => s && (s.url || s.link || s.href || s.source))
+                .slice(0, 8)
+                .map((source, index) => {
+                  const url = source.url || source.link || source.href || source.source || '#'
+                  const title = source.title || source.name || source.label || url
+                  return (
+                    <a
+                      key={index}
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        padding: '1rem',
+                        border: `1px solid var(--border-light)`,
+                        borderRadius: '8px',
+                        background: 'white',
+                        textDecoration: 'none',
+                        transition: 'all 0.2s',
+                        cursor: 'pointer'
+                      }}
+                      onMouseOver={(e) => {
+                        e.target.style.borderColor = 'var(--blue-primary)';
+                        e.target.style.boxShadow = '0 4px 12px rgba(24, 95, 165, 0.15)';
+                        e.target.style.transform = 'translateY(-2px)';
+                      }}
+                      onMouseOut={(e) => {
+                        e.target.style.borderColor = 'var(--border-light)';
+                        e.target.style.boxShadow = 'none';
+                        e.target.style.transform = 'translateY(0)';
+                      }}
+                    >
+                      <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        marginBottom: '0.5rem',
+                        fontSize: '0.75rem',
+                        color: 'var(--text-muted)',
+                        fontWeight: '600'
+                      }}>
+                        <svg
+                          width="12"
+                          height="12"
+                          viewBox="0 0 12 12"
+                          fill="currentColor"
+                        >
+                          <path d="M6 0C2.686 0 0 2.686 0 6s2.686 6 6 6 6-2.686 6-6S9.314 0 6 0zm0 10.5c-2.485 0-4.5-2.015-4.5-4.5S3.515 1.5 6 1.5s4.5 2.015 4.5 4.5-2.015 4.5-4.5 4.5zm.75-6.75H5.25v4.5h1.5v-3h1.5v-1.5z"/>
+                          <path d="M8.25 3.75L9.75 2.25 12 4.5 10.5 6z" fill="currentColor"/>
+                        </svg>
+                        {getDomainFromUrl(url)}
+                      </div>
+                      <div style={{
+                        fontSize: '0.875rem',
+                        color: 'var(--text-primary)',
+                        lineHeight: '1.4',
+                        fontWeight: '500'
+                      }}>
+                        {title}
+                      </div>
+                      <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.25rem',
+                        marginTop: '0.5rem',
+                        fontSize: '0.75rem',
+                        color: 'var(--blue-primary)',
+                        fontWeight: '500'
+                      }}>
+                        Visit source
+                        <svg
+                          width="10"
+                          height="10"
+                          viewBox="0 0 10 10"
+                          fill="currentColor"
+                        >
+                          <path d="M8 0H6V2H7.586L3 6.586V5H1v4h4V7H3.414L8 2.414V4h2V0z"/>
+                        </svg>
+                      </div>
+                    </a>
+                  )
+                })}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Timestamp */}
         <div style={{
