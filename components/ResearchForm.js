@@ -14,7 +14,7 @@ export default function ResearchForm({ onResearch, isLoading }) {
   ];
 
   const progressMessages = [
-    "Searching web...",
+    "Searching the web...",
     "Reading sources...",
     "Analyzing data...",
     "Writing report..."
@@ -266,79 +266,6 @@ export default function ResearchForm({ onResearch, isLoading }) {
                 fontWeight: '500'
               }}>
                 Researching: {topic}
-              </div>
-              <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '0.75rem',
-                marginBottom: '1rem'
-              }}>
-                {progressMessages.map((step, index) => (
-                  <div
-                    key={index}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.75rem',
-                      opacity: completedSteps.includes(index) ? 1 : 
-                                index === currentStep ? 1 : 0.4,
-                      transition: 'opacity 0.3s'
-                    }}
-                  >
-                    <div style={{
-                      width: '20px',
-                      height: '20px',
-                      borderRadius: '50%',
-                      border: completedSteps.includes(index) 
-                        ? 'none' 
-                        : index === currentStep 
-                          ? '2px solid var(--blue-primary)'
-                          : '2px solid var(--border-light)',
-                      background: completedSteps.includes(index) 
-                        ? 'var(--blue-primary)'
-                        : index === currentStep
-                          ? 'white'
-                          : 'var(--bg-page)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '10px',
-                      color: completedSteps.includes(index) ? 'white' : 'transparent',
-                      position: 'relative'
-                    }}>
-                      {completedSteps.includes(index) && (
-                        <svg
-                          width="12"
-                          height="12"
-                          viewBox="0 0 12 12"
-                          fill="currentColor"
-                        >
-                          <path d="M10 3L4.5 8.5L2 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
-                        </svg>
-                      )}
-                      {index === currentStep && !completedSteps.includes(index) && (
-                        <div style={{
-                          width: '8px',
-                          height: '8px',
-                          borderRadius: '50%',
-                          background: 'var(--blue-primary)',
-                          animation: 'pulse 2s infinite'
-                        }} />
-                      )}
-                    </div>
-                    <span style={{
-                      fontSize: '0.875rem',
-                      color: completedSteps.includes(index) 
-                        ? 'var(--text-primary)'
-                        : index === currentStep
-                          ? 'var(--blue-primary)'
-                          : 'var(--text-muted)',
-                      fontWeight: completedSteps.includes(index) || index === currentStep ? '600' : '400'
-                    }}>
-                      {step}
-                    </span>
-                  </div>
-                ))}
               </div>
               <div style={{
                 textAlign: 'center',
