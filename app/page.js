@@ -37,6 +37,9 @@ export default function Home() {
       }
 
       const data = await response.json();
+      console.log("RAW RESPONSE:", JSON.stringify(data, null, 2));
+      console.log("SOURCES ARRAY:", JSON.stringify(data.sources, null, 2));
+      console.log("FIRST SOURCE:", JSON.stringify(data.sources?.[0], null, 2));
       setReport({
         ...data,
         timestamp: new Date().toISOString()
