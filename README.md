@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI Research Agent - Frontend
 
-## Getting Started
+Next.js frontend for the AI Research Agent. Enter any topic and get a full structured report generated autonomously by Claude and Tavily.
 
-First, run the development server:
+## Live Demo
+
+[![Live Demo](https://github.com/fernandojosecc/research-agent-api/blob/main/screenshot.png?raw=true)](https://research-agent-ui-pi.vercel.app)
+
+**Live Demo:** https://research-agent-ui-pi.vercel.app  
+**Backend API:** https://research-agent-api-production.up.railway.app
+
+## Features
+
+- Research any topic with one click
+- Quick mode (3 searches ~30s) or Deep mode (7 searches ~2min)
+- Animated progress steps while researching
+- Structured report: summary, key findings, sections, sources
+- Copy report to clipboard
+- Clickable sources with links
+- Mobile responsive
+- Example topics to get started quickly
+
+## Tech Stack
+
+- **Next.js** (React framework)
+- **Deployed on Vercel**
+- **Communicates with FastAPI backend via REST API**
+- **Pure CSS** - no external UI libraries
+
+## How to Run Locally
+
+```bash
+git clone https://github.com/fernandojosecc/research-agent-ui.git
+cd research-agent-ui
+npm install
+```
+
+Create `.env.local`:
+```env
+NEXT_PUBLIC_API_URL=http://localhost:8000
+```
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+*Note: Requires the backend running locally too (see [research-agent-api](https://github.com/fernandojosecc/research-agent-api) repo)*
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Environment Variables
 
-## Learn More
+| Variable | Description | Required |
+|----------|-------------|----------|
+| `NEXT_PUBLIC_API_URL` | URL of FastAPI backend | Yes |
 
-To learn more about Next.js, take a look at the following resources:
+## Related Repository
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Backend:** https://github.com/fernandojosecc/research-agent-api
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+All AI logic lives in the backend - LangChain agents, Claude API, and Tavily search.
 
-## Deploy on Vercel
+## About
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Name:** Fernando Contreras  
+**Portfolio:** https://fernandocontreras.dev  
+**GitHub:** https://github.com/fernandojosecc
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Part of my AI engineering portfolio.
