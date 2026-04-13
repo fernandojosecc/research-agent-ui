@@ -37,8 +37,6 @@ export default function Home() {
       }
 
       const data = await response.json();
-      console.log("FULL API RESPONSE:", JSON.stringify(data, null, 2));
-      console.log("SOURCES:", JSON.stringify(data.sources, null, 2));
       setReport({
         ...data,
         timestamp: new Date().toISOString()
