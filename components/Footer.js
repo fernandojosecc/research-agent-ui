@@ -37,7 +37,7 @@ export default function Footer() {
         </div>
         
         <a
-          href="https://github.com"
+          href="https://github.com/fernandojosecc/research-agent-ui"
           target="_blank"
           rel="noopener noreferrer"
           style={{
