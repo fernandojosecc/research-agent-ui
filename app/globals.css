@@ -1,33 +1,16 @@
 :root {
-  --blue-primary: #185FA5;
-  --blue-light: #E6F1FB;
-  --yellow-primary: #BA7517;
-  --yellow-light: #FAEEDA;
-  --bg-page: #fafbff;
-  --border-light: #e4e8f0;
+  --bg-page: #fafaf6;
+  --bg-white: #ffffff;
+  --bg-warm: #f4f2ec;
   --text-primary: #1a1a18;
-  --text-muted: #666666;
-}
-
-html {
-  height: 100%;
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  color: var(--text-primary);
-  background: var(--bg-page);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --text-muted: #888888;
+  --text-faint: #bbbbbb;
+  --accent: #d48c2a;
+  --accent-light: #fdf3e3;
+  --border: #e8e6df;
+  --border-strong: #d0cdc6;
+  --terminal-bg: #f4f2ec;
+  --success: #4a9e6b;
 }
 
 * {
@@ -36,8 +19,106 @@ body {
   margin: 0;
 }
 
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  color: var(--text-primary);
+  background: var(--bg-page);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
 a {
   color: inherit;
   text-decoration: none;
 }
 
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: Georgia, serif;
+  font-weight: 400;
+}
+
+.monospace {
+  font-family: 'Courier New', monospace;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+@keyframes terminalLine {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.terminal-line {
+  animation: terminalLine 0.4s ease-out forwards;
+}
+
+.terminal-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 16px;
+  background: var(--accent);
+  animation: blink 1s infinite;
+  vertical-align: text-bottom;
+  margin-left: 2px;
+}
+
+.report-fade-in {
+  animation: fadeIn 0.4s ease-out;
+}
+
+/* Button hover effects */
+.button-scale {
+  transition: transform 0.1s ease;
+}
+
+.button-scale:active {
+  transform: scale(0.98);
+}
+
+/* Source tag hover */
+.source-tag {
+  transition: border-color 0.2s ease;
+}
+
+.source-tag:hover {
+  border-color: var(--accent);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+  
+  h1 {
+    font-size: 32px;
+  }
+}
