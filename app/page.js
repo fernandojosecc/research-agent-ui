@@ -68,7 +68,7 @@ export default function Home() {
     }}>
       <Header />
       
-      <main style={{ flex: 1, padding: '0 1rem' }}>
+      <main style={{ flex: 1 }}>
         {!report ? (
           <ResearchForm 
             onResearch={handleResearch}
@@ -83,6 +83,14 @@ export default function Home() {
       </main>
 
       <Footer />
+      
+      <style jsx>{`
+        @media (max-width: 768px) {
+          main {
+            padding: 0;
+          }
+        }
+      `}</style>
     </div>
   );
 }

@@ -245,6 +245,26 @@ export default function ReportDisplay({ report, onNewResearch }) {
           </button>
         </div>
       </div>
+      
+      <style jsx>{`
+        @media (max-width: 768px) {
+          div {
+            padding: 16px !important;
+          }
+          
+          h2 {
+            font-size: 16px !important;
+          }
+          
+          h3 {
+            font-size: 14px !important;
+          }
+          
+          p {
+            font-size: 13px !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

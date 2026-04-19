@@ -293,6 +293,24 @@ export default function ResearchForm({ onResearch, isLoading }) {
           )}
         </div>
       </div>
+      
+      <style jsx>{`
+        @media (max-width: 768px) {
+          div {
+            gridTemplateColumns: 1fr !important;
+            gap: 24px !important;
+            padding: 24px 16px !important;
+          }
+          
+          h1 {
+            font-size: 32px !important;
+          }
+          
+          p {
+            font-size: 14px !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }
